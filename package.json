@@ -1,0 +1,29 @@
+{
+  "name": "cli-OpenStego",
+  "version": "0.0.1",
+  "description": "A cli utility to integrate with OpenStego to facilitate ease of use in terminal",
+  "main": "index.js",
+  "scripts": {
+    "format": "pnpm biome check --apply ./src",
+    "lint": "pnpm biome lint --apply ./src",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tebrithiel/cli-OpenStego.git"
+  },
+  "keywords": [
+    "steganography"
+  ],
+  "author": "Tebrithiel",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Tebrithiel/cli-OpenStego/issues"
+  },
+  "homepage": "https://github.com/Tebrithiel/cli-OpenStego#readme",
+  "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724",
+  "devDependencies": {
+    "@biomejs/biome": "1.7.3",
+    "typescript": "^5.4.5"
+  }
+}
