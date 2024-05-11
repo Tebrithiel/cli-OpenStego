@@ -4,6 +4,7 @@
   "description": "A cli utility to integrate with OpenStego to facilitate ease of use in terminal",
   "main": "index.js",
   "scripts": {
+    "cli": "pnpm ts-node src/index.ts",
     "format": "pnpm biome check --apply ./src",
     "lint": "pnpm biome lint --apply ./src",
     "test": "jest"
@@ -25,5 +26,9 @@
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "enquirer": "^2.4.1",
+    "ts-node": "^10.9.2"
   }
 }
