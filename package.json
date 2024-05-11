@@ -7,6 +7,10 @@
     "cli": "pnpm ts-node src/index.ts",
     "format": "pnpm biome check --apply ./src",
     "lint": "pnpm biome lint --apply ./src",
+    "openStegoCleanDownload": "rm -rf bin/downloaded",
+    "openStegoGetAndUnzip": "pnpm openStegoGetLatestZip && pnpm openStegoUnzip && pnpm openStegoCleanDownload",
+    "openStegoGetLatestZip": "mkdir -p bin/downloaded && wget -q -O bin/downloaded/OpenStego.zip $(wget -q -O - 'https://api.github.com/repos/syvaidya/openstego/releases/latest' | jq -r '.assets[] | select(.name | test(\".zip\")) | .browser_download_url')",
+    "openStegoUnzip": "unzip bin/downloaded/OpenStego.zip '**/lib/*' -d bin/downloaded && mv bin/downloaded/**/lib/*.jar bin/openstego.jar",
     "test": "jest"
   },
   "repository": {
