@@ -1,6 +1,5 @@
-import enquirer from 'enquirer'
-import { toCamelCaseWithoutSpaces } from '../utils'
-const { prompt } = enquirer
+import { prompt } from 'enquirer'
+import camelCase from 'lodash.camelcase'
 
 interface iCredentialFormInput {
 	name: string
@@ -37,7 +36,7 @@ export class CLIInterface {
 		).map(credential => {
 			const credentialFullName = credential[0]
 			const credentialValue = credential[1]
-			const credentialCodeName = toCamelCaseWithoutSpaces(credentialFullName)
+			const credentialCodeName = camelCase(credentialFullName)
 
 			return {
 				name: credentialCodeName,
