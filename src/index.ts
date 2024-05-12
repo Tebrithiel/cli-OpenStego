@@ -1,4 +1,5 @@
-import { CLIInterface } from './components'
+import { CLIInterface, OpenStego } from './components'
+import { Config } from './utils'
 
 const testCredentials = {
 	'1Password': 'qergoihqergQERGQAErgoih230987',
@@ -8,10 +9,16 @@ const testCredentials = {
 
 async function main() {
 	const terminal = new CLIInterface()
+	const config = new Config()
+	const openStego = new OpenStego(config)
+	const { stegoPassword } = await terminal.getStegoPassword()
 
-	const test = await terminal.addCredential()
+	const test1 = openStego.decryptStego({ stegoPassword })
+	console.log(typeof test1)
 
-	console.log(test)
+	const test2 = await terminal.addCredential()
+
+	console.log(test2)
 
 	const edited = await terminal.editCredentials(testCredentials)
 
