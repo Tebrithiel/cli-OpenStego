@@ -12,6 +12,10 @@ interface iCredential {
 	value: string
 }
 
+interface iStegoPassword {
+	stegoPassword: string
+}
+
 export class CLIInterface {
 	public async addCredential(): Promise<iCredential> {
 		const credentialName: Record<string, string> = await prompt({
@@ -50,6 +54,14 @@ export class CLIInterface {
 			message: 'Current Credentials:',
 			type: 'form',
 			choices: mappedCredentials,
+		})
+	}
+
+	public async getStegoPassword(): Promise<iStegoPassword> {
+		return prompt({
+			type: 'password',
+			name: 'stegoPassword',
+			message: 'Please enter the password for your stego image:',
 		})
 	}
 }
