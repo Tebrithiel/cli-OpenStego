@@ -27,6 +27,18 @@ async function main() {
 	const edited = await terminal.editCredentials(decryptedStego)
 
 	console.log(edited)
+
+	openStego.updateStego({
+		updatedSecrets: edited.editedCredentials,
+		stegoPassword,
+	})
+
+	const updatedStego = openStego.decryptStego({ stegoPassword }) as Record<
+		string,
+		string
+	>
+
+	console.log(updatedStego)
 }
 
 main()
