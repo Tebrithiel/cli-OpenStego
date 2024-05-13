@@ -21,13 +21,18 @@ export class OpenStego {
 	public decryptStego({
 		stegoPath = this.stegoPath,
 		stegoPassword,
-		hiddenFilename = this.hiddenFilePath,
-	}: { stegoPath?: string; stegoPassword?: string; hiddenFilename?: string }):
+		hiddenFilePath = this.hiddenFilePath,
+	}: { stegoPath?: string; stegoPassword?: string; hiddenFilePath?: string }):
 		| Record<string, unknown>
 		| undefined {
-		const extract = `java -jar ${this.jarPath} extract -sf ${stegoPath} -xd . -p ${stegoPassword}`
-		const catFile = `cat ${hiddenFilename}`
-		const clearFile = `rm ${hiddenFilename}`
+		const extract = `java -jar ${
+			this.jarPath
+		} extract -sf ${stegoPath} -xd ${hiddenFilePath.substring(
+			0,
+			hiddenFilePath.lastIndexOf('/'),
+		)}${stegoPassword ? ` -p ${stegoPassword}` : ''}`
+		const catFile = `cat ${hiddenFilePath}`
+		const clearFile = `rm ${hiddenFilePath}`
 
 		this.executeSyncCommand(extract)
 
