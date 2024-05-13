@@ -21,13 +21,13 @@ beforeAll(() => {
 			(path: 'coverImage' | 'hiddenFile' | 'jar' | 'stego') => {
 				switch (path) {
 					case 'coverImage':
-						return 'coverImage/path'
+						return 'coverImage/path/image.jpg'
 					case 'hiddenFile':
-						return 'hiddenFile/path'
+						return 'hiddenFile/path/file.json'
 					case 'jar':
-						return 'jar/path'
+						return 'jar/path/openstego.jar'
 					case 'stego':
-						return 'stego/path'
+						return 'stego/path/stego.bmp'
 					default:
 						return ''
 				}
@@ -47,31 +47,27 @@ test('Config contructor should call config functions', () => {
 
 describe('(Property) decryptStego', () => {
 	test('should parse the recieved data and return the json', () => {
-		const testSecrets = `{
-			"1Password": "qergoihqergQERGQAErgoih230987",
-			"1Password Secret": "awefg-saerg98234AGF",
-			"Another secret encoded in stego": "Secret_text"
-		}`
+		const testSecrets =
+			'{"1Password password":"b!bKDTYUKg6weftyR7*IwpwefWFExh2r*FdT","1Password SecretKey":"ag-erggh-y3456u-3hjne-23yjhd4-23ygd436-at3wy45"}'
 		mockedChild_process.execSync.mockReturnValue(testSecrets)
 
 		const response = openStego.decryptStego({
-			stegoPath: 'welp',
 			stegoPassword: 'yello',
 		})
 
 		expect(mockedChild_process.execSync).toHaveBeenNthCalledWith(
 			1,
-			'java -jar jar/path extract -sf welp -xd . -p yello',
+			'java -jar jar/path/openstego.jar extract -sf stego/path/stego.bmp -xd hiddenFile/path -p yello',
 			{ encoding: 'utf8' },
 		)
 		expect(mockedChild_process.execSync).toHaveBeenNthCalledWith(
 			2,
-			'cat hiddenFile/path',
+			'cat hiddenFile/path/file.json',
 			{ encoding: 'utf8' },
 		)
 		expect(mockedChild_process.execSync).toHaveBeenNthCalledWith(
 			3,
-			'rm hiddenFile/path',
+			'rm hiddenFile/path/file.json',
 			{ encoding: 'utf8' },
 		)
 		expect(response).toStrictEqual(JSON.parse(testSecrets))
@@ -127,7 +123,7 @@ describe('(Property) decryptStego', () => {
 		expect(error).toHaveBeenCalledTimes(2)
 		expect(error).toHaveBeenNthCalledWith(
 			1,
-			'Error executing command: java -jar jar/path extract -sf stego/path -xd . -p undefined',
+			'Error executing command: java -jar jar/path/openstego.jar extract -sf stego/path/stego.bmp -xd hiddenFile/path',
 		)
 		expect(error).toHaveBeenNthCalledWith(2, 'Error: Mocked error')
 
