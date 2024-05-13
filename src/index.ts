@@ -13,16 +13,32 @@ async function main() {
 	const openStego = new OpenStego(config)
 	const { stegoPassword } = await terminal.getStegoPassword()
 
-	const test1 = openStego.decryptStego({ stegoPassword })
-	console.log(typeof test1)
+	const decryptedStego = openStego.decryptStego({ stegoPassword }) as Record<
+		string,
+		string
+	>
+
+	console.log(decryptedStego)
 
 	const test2 = await terminal.addCredential()
 
 	console.log(test2)
 
-	const edited = await terminal.editCredentials(testCredentials)
+	const edited = await terminal.editCredentials(decryptedStego)
 
 	console.log(edited)
+
+	openStego.updateStego({
+		updatedSecrets: edited.editedCredentials,
+		stegoPassword,
+	})
+
+	const updatedStego = openStego.decryptStego({ stegoPassword }) as Record<
+		string,
+		string
+	>
+
+	console.log(updatedStego)
 }
 
 main()

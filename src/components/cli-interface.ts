@@ -33,11 +33,19 @@ export class CLIInterface {
 	}
 
 	public async editCredentials(
-		currentCredentials: Record<string, string>,
-	): Promise<Record<string, string>> {
+		currentCredentials: Record<string, unknown>,
+	): Promise<Record<string, Record<string, unknown>>> {
 		const mappedCredentials: iCredentialFormInput[] = Object.entries(
 			currentCredentials,
 		).map(credential => {
+			if (typeof credential[1] !== 'string') {
+				console.error(
+					'Credential',
+					credential[0],
+					'is not typeof string. This program only supports embedding strings',
+				)
+				throw new Error('Credential is not string')
+			}
 			const credentialFullName = credential[0]
 			const credentialValue = credential[1]
 			const credentialCodeName = camelCase(credentialFullName)
