@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "cli": "pnpm ts-node src/index.ts",
+    "createNeededDirectories": "mkdir -p extracted tmp bin && touch bin/config.json",
+    "init:cli": "pnpm createNeededDirectories && pnpm openStegoGetAndUnzip",
     "format": "pnpm biome check --apply ./src",
     "lint": "pnpm biome lint --apply ./src",
     "openStegoCleanDownload": "rm -rf bin/downloaded",
